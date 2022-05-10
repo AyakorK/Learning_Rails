@@ -1,0 +1,27 @@
+<%= render 'layouts/header' %>
+
+<h1></h1>
+<%= h1_title %>
+<h2> This Website has more than <%= Article.public_count + Article.private_count %> articles availables </h2>
+<ul class="allArticles">
+
+
+
+  <% @articles.each do |article| %>
+    <li class="article"><%= link_to article.title, article, class: "articleName" %> <span class="<%= article.status %>"> <%= article.status.to_s.upcase %> </span> <br>
+      <% unless article.closed? %>
+    <%= link_to "Edit", edit_article_path(article)%>
+        <%= link_to "Delete", article_path(article), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure to delete #{article.title} ?"
+    } %>
+      <% end %>
+    </li>
+
+  <% end %>
+</ul>
+
+<%= link_to "New Article", new_article_path %>
+
+<%= stylesheet_link_tag "article" %>
+<%= javascript_include_tag "article" %>

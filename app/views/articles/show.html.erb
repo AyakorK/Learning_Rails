@@ -1,0 +1,27 @@
+<%= render 'layouts/header' %>
+
+<h1> <%= @article.title %></h1>
+
+<p> <%= @article.body %></p>
+
+
+<h2 id="comments">Comments</h2>
+
+<% @article.comments.each do |comment| %>
+  <% unless comment.deleted? %>
+    <strong> <%= comment.commenter.present? ? comment.commenter : 'Anonymous' %></strong>
+    <p> <%= comment.stars %></p>
+    <p> <%= comment.body %></p>
+
+    <a <%= link_to "Delete", [comment.article, comment], data: {
+  turbo_method: :delete,
+  turbo_confirm: "Are you sure to delete the comment of #{ comment.hasACommenter?} ?"
+} %> <br>
+  <% end %>
+<% end %>
+
+
+<% unless @article.status == "closed"%>
+<%= render "comments/form" %>
+<% end %>
+

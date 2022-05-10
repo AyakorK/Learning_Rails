@@ -1,0 +1,29 @@
+<%= render 'layouts/header' %>
+
+<h1>New article</h1>
+
+<%= form_for @article do |f| %>
+
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <% @article.errors.full_messages.each do |message| %>
+    <div class="error"> <%= message %> </div>
+    <% end %>
+<div  class="form-group">
+<%= f.label :title %>
+<%= f.text_field :title, class: "form-control" %>
+</div>
+
+<div class="form-group">
+<%= f.label :body %>
+<%= f.text_area :body, class: "form-control" %>
+</div>
+
+  <div class="form-group">
+<%= f.select :status, %w(public private), selected: 'public' %>
+  </div>
+
+<div>
+<%= f.submit "Create", class: "btn btn-primary" %>
+</div>
+<% end %>

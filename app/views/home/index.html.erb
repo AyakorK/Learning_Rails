@@ -1,0 +1,10 @@
+<%= render 'layouts/header' %>
+<h1> Welcome to this learning page</h1>
+
+<h2> This Website has <%= Article.public_count + Article.private_count + Article.closed_count%> articles </h2>
+<div class="articles">
+  <span> Click here to find them ! </span>
+  <%= link_to 'Articles', articles_path %>
+</div>
+
+

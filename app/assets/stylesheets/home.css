@@ -1,0 +1,35 @@
+h1 {
+    font-size: 2.2em;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+h2 {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.articles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin-top: 3em;
+}
+
+.articles span {
+    font-size: 1.2em;
+}
+
+.articles a {
+    margin: 0.5em;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #000;
+}
+
+.articles a:hover {
+    text-decoration: underline;
+}
+

@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: rgba(196, 196, 196, 0.37);
+  padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header a {
+  color: #777;
+  text-decoration: none;
+  font-size: 1.3em;
+  transition: 0.5s ease;
+}
+
+header .selected {
+  color: #000;
+  border-bottom: 2px solid rgba(37, 111, 134, 0.66);
+  animation: grow 0.7s ease;
+}
+
+header .register {
+  display: flex;
+  flex-direction: column;
+}
+a:hover {
+  color: #333;
+}
+
+
+@keyframes grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+
+}
