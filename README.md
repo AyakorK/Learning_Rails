@@ -1,3 +1,4 @@
+
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# Learning_Rails
+Learning Rails by doing a little website of introduction
+
