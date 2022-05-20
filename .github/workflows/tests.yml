@@ -1,9 +1,5 @@
 name: Tests
-on:
-  push:
-    branches:
-      - develop
-      - master
+on: ['push']
 
 env:
   RUBY_VERSION: 3.1.0
