@@ -1,0 +1,87 @@
+name: Tests
+on:
+  push:
+    branches:
+      - develop
+      - master
+
+env:
+  RUBY_VERSION: 3.1.0
+  RAILS_ENV: test
+  NODE_VERSION: 16.14.2
+  RUBYOPT: '-W:no-deprecated'
+
+jobs:
+  lint:
+    name: Lint code
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: rokroskar/workflow-run-cleanup-action@v0.3.0
+        if: "github.ref != 'refs/heads/develop'"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/checkout@v2.0.0
+        with:
+          fetch-depth: 1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: bundle exec rubocop -P
+        name: Lint Ruby files
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs: [lint]
+    services:
+      postgres:
+        image: postgres:14
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_PASSWORD: postgres
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+
+    steps:
+      - uses: rokroskar/workflow-run-cleanup-action@v0.2.2
+        if: "github.ref != 'refs/heads/master' || github.ref != 'refs/heads/develop'"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/checkout@v2.0.0
+        with:
+          fetch-depth: 1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Create db
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+      - name: Precompile assets
+        run: |
+          bundle exec rake assets:precompile
+      - run: mkdir -p ./spec/tmp/screenshots
+        name: Create the screenshots folder
+      - uses: nanasess/setup-chromedriver@v1.0.1
+      - run: bundle exec rspec
+        name: RSpec
+      - uses: actions/upload-artifact@v2-preview
+        if: always()
+        with:
+          name: screenshots
+          path: ./spec/tmp/screenshots

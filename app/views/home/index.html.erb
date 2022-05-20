@@ -1,10 +1,26 @@
 <%= render 'layouts/header' %>
-<h1> Welcome to this learning page</h1>
+<h1> <%=I18n.t("welcome")%></h1>
 
-<h2> This Website has <%= Article.public_count + Article.private_count + Article.closed_count%> articles </h2>
+<h2> <%=  t('website') %> <%= Article.public_count + Article.private_count + Article.closed_count%> <%= t('articles') %> </h2>
 <div class="articles">
-  <span> Click here to find them ! </span>
-  <%= link_to 'Articles', articles_path %>
+  <%= link_to t('click'), articles_path %>
 </div>
+
+
+<div class="sliderOfArticles relative ">
+  <% Article.all.each do |article| %>
+    <% if article.status != 'closed' %>
+      <% # If there are no elements in sliderOfArticles
+      %>
+        <div class="article_slider inset-0 w-screen h-screen absolute transition-all ease-in-out duration-1000 transform translate-x-full slide">
+          <div class="bg-slate-400 w-52 rounded-2xl">
+         <h2><%= link_to article.title, article_path(article) %> </h2>
+          <p>  <%= t('created_on') + ' ' + article.created_at.strftime('%m/%d/%Y')%></p>
+        </div>
+        </div>
+    <% end %>
+  <% end %>
+</div>
+<%= javascript_include_tag 'home' %>
 
 

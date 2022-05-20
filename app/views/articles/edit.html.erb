@@ -1,6 +1,6 @@
 <%= render 'layouts/header' %>
 
-<h1>Edit this article !</h1>
+<h1><%= t('edit_article') %> !</h1>
 <h2> <%= @article.title %> </h2>
 
 <%= form_for @article do |f| %>
@@ -23,6 +23,6 @@
   </div>
 
   <div>
-    <%= f.submit "Edit", class: "btn btn-primary" %>
+    <%= f.submit t('submit_edit'), class: "btn btn-primary" %>
   </div>
 <% end %>

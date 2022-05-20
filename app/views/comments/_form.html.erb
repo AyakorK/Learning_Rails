@@ -1,5 +1,17 @@
-<h2 id="addComment">Add a Comment !</h2>
+<h2 id="addComment"><%= t('add_comment') %></h2>
 <%= form_with model: [ @article, @article.comments.build ]  do |f| %>
+
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |msg| %>
+        <%= msg %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+
   <div>
     <%= f.label :commenter %> <br>
     <%= f.text_field :commenter %>
@@ -20,7 +32,7 @@
   </div>
 
   <div>
-    <%= f.submit "Send your comment !", class: "btn btn-primary" %>
+    <%= f.submit t('submit_comment'), class: "btn btn-primary" %>
   </div>
 
 <% end %>

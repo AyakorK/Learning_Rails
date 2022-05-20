@@ -1,23 +1,26 @@
 <header>
-    <%= link_to "Home", root_path%>
-    <%= link_to "Articles", articles_path %>
+    <%= link_to t('home'), root_path%>
+    <%= link_to t('articles'), articles_path %>
 
   <% if user_signed_in? %>
     <div class="register">
-    <%= current_user.id %>
-    <%= link_to "Log out", destroy_user_session_path, data: {
+    <%= current_user.email %>
+    <%= link_to t('logout'), destroy_user_session_path, data: {
   turbo_method: :delete,
-  turbo_confirm: "Are you sure to log out ?"
+  turbo_confirm: t('confirm_logout')
 } %>
     </div>
   <% else %>
 
     <div class="register">
-    <%= link_to "Log in", users_path  %>
-    <%= link_to "Register", new_user_session_path %>
+    <%= link_to t('login'), users_path  %>
+    <%= link_to t('register'), new_user_session_path %>
     </div>
 
   <% end %>
 
 </header>
-  <%= javascript_include_tag "header" %>
+<%= javascript_include_tag "header" %>
+
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

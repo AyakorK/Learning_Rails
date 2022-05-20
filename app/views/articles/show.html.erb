@@ -1,27 +1,30 @@
 <%= render 'layouts/header' %>
 
-<h1> <%= @article.title %></h1>
-
-<p> <%= @article.body %></p>
 
 
-<h2 id="comments">Comments</h2>
+<h1><%= t('title') %>: <%= @article.title %></h1>
+<h2><%= t('author') %> : <%= get_user_email(@article.user_id) %></h2>
+<h2><%= t('content') %> : <%= @article.body %></h2>
+
+<%  unless @article.comments.empty?%>
+<h3 id="comments"> <%= t('comments') %></h3>
+
 
 <% @article.comments.each do |comment| %>
   <% unless comment.deleted? %>
-    <strong> <%= comment.commenter.present? ? comment.commenter : 'Anonymous' %></strong>
-    <p> <%= comment.stars %></p>
-    <p> <%= comment.body %></p>
+    <strong><%= t('author') %> : <%= comment.commenter.present? ? comment.commenter : 'Anonymous' %></strong>
+    <p> <%= t('stars') %> : <%= comment.stars %></p>
+    <p> <%= t('content')%> : <%= comment.body %></p>
 
-    <a <%= link_to "Delete", [comment.article, comment], data: {
+    <%= link_to "Delete", [comment.article, comment], data: {
   turbo_method: :delete,
-  turbo_confirm: "Are you sure to delete the comment of #{ comment.hasACommenter?} ?"
+  turbo_confirm: "Are you sure to delete the comment of #{ comment.a_commenter?} ?"
 } %> <br>
   <% end %>
 <% end %>
-
-
-<% unless @article.status == "closed"%>
-<%= render "comments/form" %>
 <% end %>
+
+
+<%= render "comments/form" unless @article.status == "closed" || !user_signed_in? || user_has_commented(@article.id, current_user.id) || @article.user_id == current_user.id%>
+
 

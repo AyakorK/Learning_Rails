@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
+# Method to create articles table
 class CreateArticles < ActiveRecord::Migration[7.0]
   def change
     create_table :articles do |t|
-      t.bigint(:user_id)
       t.string :title
       t.text :body
 

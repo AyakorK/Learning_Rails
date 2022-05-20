@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# == Schema Information
 module Visible
   extend ActiveSupport::Concern
 
-  VALID_STATUSES = %w(public private closed deleted)
+  VALID_STATUSES = %w[public private closed deleted].freeze
 
   included do
     validates :status, inclusion: { in: VALID_STATUSES }
@@ -11,12 +14,15 @@ module Visible
     def public_count
       where(status: 'public').count
     end
+
     def private_count
       where(status: 'private').count
     end
+
     def closed_count
       where(status: 'closed').count
     end
+
     def deleted_count
       where(status: 'deleted').count
     end
@@ -30,11 +36,11 @@ module Visible
     status == 'deleted'
   end
 
-  def hasACommenter?
-    if self.commenter != ""
-      self.commenter
-        else
+  def a_commenter?
+    if commenter == ''
       'Anonymous'
+    else
+      commenter
     end
   end
 end
