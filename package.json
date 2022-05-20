@@ -1,0 +1,24 @@
+{
+  "name": "learning_rails",
+  "version": "1.0.0",
+  "description": "![Continuous Integration](https://github.com/AyakorK/Learning_Rails/actions/workflows/tests.yml/badge.svg)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyakorK/Learning_Rails.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyakorK/Learning_Rails/issues"
+  },
+  "homepage": "https://github.com/AyakorK/Learning_Rails#readme"
+}

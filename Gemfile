@@ -83,8 +83,6 @@ gem 'rubocop-rspec'
 
 gem 'sweetalert2-rails'
 
-gem 'webpacker'
-
 gem 'psych', '< 4.0'
 
 gem 'factory_bot_rails'
